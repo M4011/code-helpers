@@ -1,3 +1,25 @@
 for file in image*.jpg; do
   mv "$file" "img_$(printf '%02d' "${file#image}" | sed 's/[^0-9]*//g').jpg"
 done
+
+
+
+You can rename a bunch of images with a common pattern in their names using the terminal on Unix-like systems (e.g., Linux or macOS) by using the mv command in combination with a for loop. Here's how you can do it:
+Assuming you have a set of image files like image1.jpg, image2.jpg, image3.jpg, and you want to rename them to img_01.jpg, img_02.jpg, img_03.jpg, etc., you can use a loop in the terminal.
+Open your terminal and navigate to the directory containing the images, and then run the following command:
+bash
+Copy code
+for file in image*.jpg; do
+  mv "$file" "img_$(printf '%02d' "${file#image}" | sed 's/[^0-9]*//g').jpg"
+done
+Here's a breakdown of what this command does:
+
+for file in image*.jpg; do: This loop iterates over all files in the current directory that match the pattern image*.jpg.
+
+mv "$file" "img_$(printf '%02d' "${file#image}" | sed 's/[^0-9]*//g').jpg":
+
+"img_$(...).jpg": This constructs the new filename using the printf` command and string manipulation.
+printf '%02d' "${file#image}" extracts the numeric part from the current filename (e.g., "1" from "image1.jpg") and ensures it is zero-padded to two digits.
+sed 's/[^0-9]*//g' removes any non-numeric characters from the extracted part to handle cases where the filenames might contain non-numeric characters.
+Finally, the mv command renames the file.
+After running this command, your images should be renamed according to the pattern img_01.jpg, img_02.jpg, img_03.jpg, and so on. Make sure to adjust the file extension (e.g., .jpg) and the filename pattern (image*.jpg) according to your actual filenames.
